@@ -1,0 +1,160 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ─── Enums ────────────────────────────────────────────────────────────────────
+
+enum Role {
+  VIEWER
+  CREATOR
+  ADMIN
+}
+
+enum DatePrecision {
+  YEAR
+  MONTH
+  DAY
+}
+
+// ─── Models ───────────────────────────────────────────────────────────────────
+
+model User {
+  id        String   @id @default(cuid())
+  name      String?
+  email     String   @unique
+  image     String?
+  role      Role     @default(VIEWER)
+  blocked   Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // NextAuth required fields
+  accounts Account[]
+  sessions Session[]
+
+  photos Photo[]
+
+  @@map("users")
+}
+
+// NextAuth adapter models
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}
+
+// ─── Archive content ──────────────────────────────────────────────────────────
+
+/// Hierarchical content taxonomy (e.g. Region → City → Neighborhood)
+model Category {
+  id       String  @id @default(cuid())
+  name     String
+  slug     String  @unique
+  parentId String?
+
+  parent   Category?  @relation("CategoryTree", fields: [parentId], references: [id])
+  children Category[] @relation("CategoryTree")
+  photos   Photo[]
+
+  @@map("categories")
+}
+
+model Photo {
+  id          String   @id @default(cuid())
+  title       String
+  description String?  @db.Text
+  url         String   // relative path locally; absolute URL on cloud
+  uploaderId  String
+  categoryId  String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Approximate date of the depicted event/place
+  takenAtYear  Int?
+  takenAtMonth Int?
+  takenAtDay   Int?
+  datePrecision DatePrecision?
+
+  uploader User      @relation(fields: [uploaderId], references: [id])
+  category Category? @relation(fields: [categoryId], references: [id])
+  location Location?
+  tags     PhotoTag[]
+
+  @@map("photos")
+}
+
+model Location {
+  id       String  @id @default(cuid())
+  photoId  String  @unique
+  region   String?
+  city     String?
+  district String?
+  lat      Float?
+  lng      Float?
+
+  photo Photo @relation(fields: [photoId], references: [id], onDelete: Cascade)
+
+  @@map("locations")
+}
+
+model Tag {
+  id     String     @id @default(cuid())
+  name   String     @unique
+  photos PhotoTag[]
+
+  @@map("tags")
+}
+
+model PhotoTag {
+  photoId String
+  tagId   String
+
+  photo Photo @relation(fields: [photoId], references: [id], onDelete: Cascade)
+  tag   Tag   @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([photoId, tagId])
+  @@map("photo_tags")
+}
