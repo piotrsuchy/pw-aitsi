@@ -27,14 +27,15 @@ enum DatePrecision {
 // ─── Models ───────────────────────────────────────────────────────────────────
 
 model User {
-  id        String   @id @default(cuid())
-  name      String?
-  email     String   @unique
-  image     String?
-  role      Role     @default(VIEWER)
-  blocked   Boolean  @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+  role          Role      @default(VIEWER)
+  blocked       Boolean   @default(false)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 
   // NextAuth required fields
   accounts Account[]

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 
-const publicPaths = ["/", "/login", "/browse", "/search", "/photos", "/api/photos", "/api/categories"];
+const publicPaths = ["/", "/login", "/browse", "/search", "/photos", "/api/auth", "/api/photos", "/api/categories"];
 
 function isPublic(pathname: string) {
   return publicPaths.some(
