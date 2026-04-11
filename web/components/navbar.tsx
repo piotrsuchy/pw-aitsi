@@ -47,14 +47,24 @@ export async function Navbar() {
           )}
           {(session?.user.role === "CREATOR" ||
             session?.user.role === "ADMIN") && (
-            <li>
-              <Link
-                href="/creator/upload"
-                className="rounded-md bg-[var(--primary)] px-3 py-2 text-[var(--primary-foreground)] hover:opacity-90 transition-opacity"
-              >
-                Add photo
-              </Link>
-            </li>
+            <>
+              <li>
+                <Link
+                  href="/creator/my-photos"
+                  className="rounded-md px-3 py-2 hover:bg-[var(--muted)] transition-colors"
+                >
+                  My photos
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/creator/upload"
+                  className="rounded-md bg-[var(--primary)] px-3 py-2 text-[var(--primary-foreground)] hover:opacity-90 transition-opacity"
+                >
+                  Add photo
+                </Link>
+              </li>
+            </>
           )}
         </ul>
 
