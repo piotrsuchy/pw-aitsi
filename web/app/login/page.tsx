@@ -14,6 +14,7 @@ export default async function LoginPage({
   if (session) redirect("/");
 
   const { callbackUrl } = await searchParams;
+  const isDev = process.env.NODE_ENV === "development";
 
   return (
     <main className="min-h-screen flex items-center justify-center bg-[var(--muted)] px-4">
@@ -39,6 +40,53 @@ export default async function LoginPage({
             Continue with Google
           </button>
         </form>
+
+        {isDev && (
+          <div className="rounded-lg border border-dashed border-yellow-500 p-4 space-y-2">
+            <p className="text-xs font-semibold text-yellow-600 dark:text-yellow-400 text-center uppercase tracking-wide">
+              Dev logins — development only
+            </p>
+            <form
+              action={async () => {
+                "use server";
+                await signIn("dev-login", { role: "ADMIN", redirectTo: callbackUrl ?? "/" });
+              }}
+            >
+              <button
+                type="submit"
+                className="w-full rounded-lg bg-yellow-100 dark:bg-yellow-900/30 border border-yellow-400 px-4 py-2 text-sm font-medium text-yellow-800 dark:text-yellow-300 hover:bg-yellow-200 dark:hover:bg-yellow-900/50 transition-colors"
+              >
+                Login as Admin
+              </button>
+            </form>
+            <form
+              action={async () => {
+                "use server";
+                await signIn("dev-login", { role: "CREATOR", redirectTo: callbackUrl ?? "/" });
+              }}
+            >
+              <button
+                type="submit"
+                className="w-full rounded-lg bg-yellow-100 dark:bg-yellow-900/30 border border-yellow-400 px-4 py-2 text-sm font-medium text-yellow-800 dark:text-yellow-300 hover:bg-yellow-200 dark:hover:bg-yellow-900/50 transition-colors"
+              >
+                Login as Creator
+              </button>
+            </form>
+            <form
+              action={async () => {
+                "use server";
+                await signIn("dev-login", { role: "VIEWER", redirectTo: callbackUrl ?? "/" });
+              }}
+            >
+              <button
+                type="submit"
+                className="w-full rounded-lg bg-yellow-100 dark:bg-yellow-900/30 border border-yellow-400 px-4 py-2 text-sm font-medium text-yellow-800 dark:text-yellow-300 hover:bg-yellow-200 dark:hover:bg-yellow-900/50 transition-colors"
+              >
+                Login as Viewer
+              </button>
+            </form>
+          </div>
+        )}
 
         <p className="text-center text-xs text-[var(--muted-foreground)]">
           You can browse the archive without signing in.{" "}

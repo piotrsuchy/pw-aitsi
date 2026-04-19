@@ -11,7 +11,8 @@
     "test:watch": "vitest",
     "db:seed": "tsx prisma/seed.ts",
     "db:migrate": "prisma migrate dev",
-    "db:reset": "prisma migrate reset"
+    "db:reset": "prisma migrate reset",
+    "dev:set-role": "tsx scripts/set-role.ts"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

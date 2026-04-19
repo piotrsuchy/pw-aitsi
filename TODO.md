@@ -6,8 +6,8 @@ Status as of 2026-04-19. Organized by grading criteria from `criteria.md` and de
 
 ## Critical / Demo-blocking
 
-- [ ] **Blocked-user redirect middleware** (`web/middleware.ts`)  
-  A blocked user with an active session can still browse everything. Need `middleware.ts` that checks `session.user.blocked` and redirects to `/blocked`. Also add the `blocked` check to `PATCH /api/photos/[id]`.  
+- [x] **Blocked-user redirect middleware** (`web/middleware.ts`)  
+  Switched auth to JWT strategy (Edge-compatible). `middleware.ts` checks `session.user.blocked` and redirects to `/blocked`. Also added the `blocked` check to `PATCH /api/photos/[id]`.  
   *Verification step 1e, 3a*
 
 - [ ] **Search filters UI** — year range + category + region/city  
@@ -18,8 +18,8 @@ Status as of 2026-04-19. Organized by grading criteria from `criteria.md` and de
   Upload form supports tags; inline edit does not. The `PATCH /api/photos/[id]` endpoint needs to be extended to handle tags, and the edit form needs a tags field.  
   *Criteria 4 — "edycja i usuwanie swoich materiałów"*
 
-- [ ] **Seed admin email must match real Google account**  
-  `web/prisma/seed.ts` hardcodes `admin@example.com`. Before the demo, update to the real Google-logged-in email OR document the manual `UPDATE users SET role='ADMIN' WHERE email='...'` step.  
+- [x] **Seed admin email must match real Google account**  
+  Seed updated to `piotrsuchypp@gmail.com`. Dev credentials provider added (`admin@dev.local`, `creator@dev.local`, `viewer@dev.local`) with "Dev Login" buttons on the login page (development only). `npm run dev:set-role -- <email> <ROLE>` script added for ad-hoc role changes.  
   *Verification step 1c*
 
 ---
