@@ -54,7 +54,22 @@ export async function PATCH(
     takenAtDay,
     datePrecision,
     location,
+    tags,
   } = body;
+
+  let tagUpserts;
+  if (tags !== undefined && Array.isArray(tags)) {
+    tagUpserts = await Promise.all(
+      tags.map(async (name: string) => {
+        const tag = await db.tag.upsert({
+          where: { name },
+          update: {},
+          create: { name },
+        });
+        return { tagId: tag.id };
+      })
+    );
+  }
 
   const updated = await db.photo.update({
     where: { id },

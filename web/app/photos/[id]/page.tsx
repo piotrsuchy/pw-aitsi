@@ -194,6 +194,7 @@ export default async function PhotoPage({
                 takenAtDay: photo.takenAtDay,
                 datePrecision: photo.datePrecision,
                 location: photo.location,
+                tags: photo.tags.map((t) => t.tag.name).join(", "),
               }}
               categories={categories}
             />

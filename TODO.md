@@ -4,35 +4,13 @@ Status as of 2026-04-19. Organized by grading criteria from `criteria.md` and de
 
 ---
 
-## Critical / Demo-blocking
-
-- [x] **Blocked-user redirect middleware** (`web/middleware.ts`)  
-  Switched auth to JWT strategy (Edge-compatible). `middleware.ts` checks `session.user.blocked` and redirects to `/blocked`. Also added the `blocked` check to `PATCH /api/photos/[id]`.  
-  *Verification step 1e, 3a*
-
-- [x] **Search filters UI** — year range + category + region/city  
-  `GET /api/photos` already accepts `dateFrom`, `dateTo`, `category`, `region`, `city` but `/search` only exposes the text `q` field. Need filter controls on the search page.  
-  *Criteria 3 — "zawężanie wyników"; Verification step 2e*
-
-- [ ] **Tag editing in photo edit panel** (`web/app/photos/[id]/photo-actions.tsx`)  
-  Upload form supports tags; inline edit does not. The `PATCH /api/photos/[id]` endpoint needs to be extended to handle tags, and the edit form needs a tags field.  
-  *Criteria 4 — "edycja i usuwanie swoich materiałów"*
-
-- [x] **Seed admin email must match real Google account**  
-  Seed updated to `piotrsuchypp@gmail.com`. Dev credentials provider added (`admin@dev.local`, `creator@dev.local`, `viewer@dev.local`) with "Dev Login" buttons on the login page (development only). `npm run dev:set-role -- <email> <ROLE>` script added for ad-hoc role changes.  
-  *Verification step 1c*
-
----
-
 ## High Priority (graded features with gaps)
+
+- [ ] **Give an option to add categories - currently it's just Krakow and Warsaw**
 
 - [ ] **Pagination UI on Browse and Search pages**  
   `GET /api/photos` returns `meta.pages` / `meta.total` but both pages use a hard-coded `take: 48`. Large archives silently truncate. Add "Load more" or page links.  
   *Criteria 3 — "prezentacja wyników"*
-
-- [x] **Category `<optgroup>` on upload form** (`web/app/creator/upload/upload-form.tsx`)  
-  All categories are listed flat. Group leaf categories under their parent using `<optgroup>` labels for clarity.  
-  *Criteria 4, Criteria 5 — "intuicyjny interfejs"*
 
 - [ ] **Success feedback after inline photo edit**  
   `PhotoActions` shows an error state but no success toast/message after a successful save. Add a brief confirmation.  
@@ -82,3 +60,18 @@ Status as of 2026-04-19. Organized by grading criteria from `criteria.md` and de
 - [x] Admin-only user management API (`/api/users/[id]/role`, `/api/users/[id]/block`)
 - [x] Docker Compose for local Postgres + pgAdmin
 - [x] Prisma seed with sample categories (Warsaw, Krakow hierarchy)
+- [x] **Blocked-user redirect middleware** (`web/middleware.ts`)
+  Switched auth to JWT strategy (Edge-compatible). `middleware.ts` checks `session.user.blocked` and redirects to `/blocked`. Also added the `blocked` check to `PATCH /api/photos/[id]`.
+  *Verification step 1e, 3a*
+- [x] **Search filters UI** — year range + category + region/city
+  `GET /api/photos` already accepts `dateFrom`, `dateTo`, `category`, `region`, `city` but `/search` only exposes the text `q` field. Need filter controls on the search page.
+  *Criteria 3 — "zawężanie wyników"; Verification step 2e*
+- [x] **Seed admin email must match real Google account**
+  Seed updated to `piotrsuchypp@gmail.com`. Dev credentials provider added (`admin@dev.local`, `creator@dev.local`, `viewer@dev.local`) with "Dev Login" buttons on the login page (development only). `npm run dev:set-role -- <email> <ROLE>` script added for ad-hoc role changes.
+  *Verification step 1c*
+- [x] **Category `<optgroup>` on upload form** (`web/app/creator/upload/upload-form.tsx`)  
+  All categories are listed flat. Group leaf categories under their parent using `<optgroup>` labels for clarity.  
+  *Criteria 4, Criteria 5 — "intuicyjny interfejs"*
+- [x] **Tag editing in photo edit panel** (`web/app/photos/[id]/photo-actions.tsx`)
+  Upload form supports tags; inline edit does not. The `PATCH /api/photos/[id]` endpoint needs to be extended to handle tags, and the edit form needs a tags field.
+  *Criteria 4 — "edycja i usuwanie swoich materiałów"*

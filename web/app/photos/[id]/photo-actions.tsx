@@ -21,8 +21,8 @@ type PhotoActionsProps = {
     takenAtYear?: number | null;
     takenAtMonth?: number | null;
     takenAtDay?: number | null;
-    datePrecision?: string | null;
     location?: LocationData | null;
+    tags?: string;
   };
   categories: Pick<Category, "id" | "name">[];
 };
@@ -41,12 +41,12 @@ export function PhotoActions({ photoId, initial, categories }: PhotoActionsProps
     takenAtYear: initial.takenAtYear?.toString() ?? "",
     takenAtMonth: initial.takenAtMonth?.toString() ?? "",
     takenAtDay: initial.takenAtDay?.toString() ?? "",
-    datePrecision: initial.datePrecision ?? "",
     region: initial.location?.region ?? "",
     city: initial.location?.city ?? "",
     district: initial.location?.district ?? "",
     lat: initial.location?.lat?.toString() ?? "",
     lng: initial.location?.lng?.toString() ?? "",
+    tags: initial.tags ?? "",
   });
 
   async function handleDelete() {
@@ -62,6 +62,9 @@ export function PhotoActions({ photoId, initial, categories }: PhotoActionsProps
   }
 
   async function handleSave() {
+    if (form.takenAtMonth && !form.takenAtYear) { setError("Year is required if month is provided."); return; }
+    if (form.takenAtDay && !form.takenAtMonth) { setError("Month is required if day is provided."); return; }
+
     setSaving(true);
     setError(null);
 
@@ -72,7 +75,11 @@ export function PhotoActions({ photoId, initial, categories }: PhotoActionsProps
       takenAtYear: form.takenAtYear ? parseInt(form.takenAtYear) : null,
       takenAtMonth: form.takenAtMonth ? parseInt(form.takenAtMonth) : null,
       takenAtDay: form.takenAtDay ? parseInt(form.takenAtDay) : null,
-      datePrecision: form.datePrecision || null,
+      datePrecision: 
+        (form.takenAtDay && form.takenAtMonth && form.takenAtYear) ? "DAY" 
+        : (form.takenAtMonth && form.takenAtYear) ? "MONTH" 
+        : form.takenAtYear ? "YEAR" : null,
+      tags: form.tags.split(",").map((t) => t.trim()).filter(Boolean),
     };
 
     if (form.region || form.city || form.district || form.lat || form.lng) {
@@ -179,23 +186,11 @@ export function PhotoActions({ photoId, initial, categories }: PhotoActionsProps
             {field("Day", "takenAtDay", "number")}
           </div>
 
-          <div>
-            <label className="block text-xs font-medium text-[var(--muted-foreground)] mb-1">
-              Date precision
-            </label>
-            <select
-              value={form.datePrecision}
-              onChange={(e) => setForm((f) => ({ ...f, datePrecision: e.target.value }))}
-              className="w-full rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-sm focus-visible:outline-[var(--primary)]"
-            >
-              <option value="">— None —</option>
-              <option value="YEAR">Year only</option>
-              <option value="MONTH">Year + Month</option>
-              <option value="DAY">Full date</option>
-            </select>
+          <div className="pt-2">
+            {field("Tags (comma separated)", "tags")}
           </div>
 
-          <p className="text-xs font-medium text-[var(--muted-foreground)] uppercase tracking-wider pt-1">
+          <p className="text-xs font-medium text-[var(--muted-foreground)] uppercase tracking-wider pt-2">
             Location
           </p>
           <div className="grid grid-cols-2 gap-3">
