@@ -32,6 +32,7 @@ export async function PATCH(
 ) {
   const session = await auth();
   if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  if (session.user.blocked) return NextResponse.json({ error: "Forbidden" }, { status: 403 });
 
   const { id } = await params;
   const photo = await db.photo.findUnique({ where: { id } });

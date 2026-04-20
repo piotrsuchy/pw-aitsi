@@ -6,17 +6,36 @@ const adapter = new PrismaPg(process.env.DATABASE_URL!);
 const prisma = new PrismaClient({ adapter });
 
 async function main() {
-  // Seed admin user — update email to match your Google account
+  // Primary admin — matches the real Google account used for development
   const admin = await prisma.user.upsert({
-    where: { email: "admin@example.com" },
+    where: { email: "piotrsuchypp@gmail.com" },
     update: { role: "ADMIN" },
     create: {
-      email: "admin@example.com",
+      email: "piotrsuchypp@gmail.com",
       name: "Administrator",
       role: "ADMIN",
+      emailVerified: new Date(),
     },
   });
   console.log("Admin user:", admin.email);
+
+  // Dev test users — created on first dev login, kept in sync by seed
+  await prisma.user.upsert({
+    where: { email: "admin@dev.local" },
+    update: { role: "ADMIN" },
+    create: { email: "admin@dev.local", name: "Dev Admin", role: "ADMIN", emailVerified: new Date() },
+  });
+  await prisma.user.upsert({
+    where: { email: "creator@dev.local" },
+    update: { role: "CREATOR" },
+    create: { email: "creator@dev.local", name: "Dev Creator", role: "CREATOR", emailVerified: new Date() },
+  });
+  await prisma.user.upsert({
+    where: { email: "viewer@dev.local" },
+    update: { role: "VIEWER" },
+    create: { email: "viewer@dev.local", name: "Dev Viewer", role: "VIEWER", emailVerified: new Date() },
+  });
+  console.log("Dev test users seeded (admin@dev.local, creator@dev.local, viewer@dev.local)");
 
   // Seed example category hierarchy
   const warsaw = await prisma.category.upsert({

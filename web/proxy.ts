@@ -1,7 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 
-const publicPaths = ["/", "/login", "/browse", "/search", "/photos", "/api/auth", "/api/photos", "/api/categories"];
+const publicPaths = [
+  "/",
+  "/login",
+  "/blocked",
+  "/browse",
+  "/search",
+  "/photos",
+  "/uploads",      // static uploaded image files — publicly viewable
+  "/api/auth",
+  "/api/photos",
+  "/api/categories",
+];
 
 function isPublic(pathname: string) {
   return publicPaths.some(
@@ -44,5 +55,10 @@ export default async function proxy(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico|public/).*)"],
+  // Exclude Next.js internals, static assets, and uploaded image files
+  // from proxy evaluation. Uploaded files must be excluded here because
+  // Next.js image optimisation fetches them internally via a mock request
+  // that carries no cookies — running auth() on it would always see no
+  // session and redirect to /login, breaking <Image> components.
+  matcher: ["/((?!_next/static|_next/image|favicon.ico|public/|uploads/).*)" ],
 };
