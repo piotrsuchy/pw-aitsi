@@ -8,9 +8,11 @@
 
 ```bash
 # One-shot run (CI / before committing)
+cd web/
 npm test
 
 # Watch mode — re-runs affected tests on file save
+cd web/
 npm run test:watch
 ```
 
@@ -26,6 +28,7 @@ Both commands must be run from the `web/` directory.
 | `tests/api/categories.test.ts` | `GET /api/categories` |
 
 Each file covers:
+
 - **Auth guards** — 401/403 responses for unauthenticated, blocked, or wrong-role callers
 - **Input validation** — 400 responses for missing or invalid fields
 - **Happy paths** — correct status codes and response shapes
