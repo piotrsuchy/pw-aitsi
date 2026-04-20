@@ -4,7 +4,11 @@ import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 
-type Category = { id: string; name: string };
+type Category = {
+  id: string;
+  name: string;
+  children: { id: string; name: string }[];
+};
 
 export function UploadForm({ categories }: { categories: Category[] }) {
   const router = useRouter();
@@ -183,8 +187,20 @@ export function UploadForm({ categories }: { categories: Category[] }) {
           className="w-full rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-sm focus-visible:outline-[var(--primary)]"
         >
           <option value="">— Select category —</option>
-          {categories.map((c) => (
-            <option key={c.id} value={c.id}>{c.name}</option>
+          {categories.map((parent) => (
+            <optgroup key={parent.id} label={parent.name}>
+              {parent.children.length > 0 && (
+                <option value={parent.id}>All of {parent.name}</option>
+              )}
+              {parent.children.length === 0 && (
+                <option value={parent.id}>{parent.name}</option>
+              )}
+              {parent.children.map((child) => (
+                <option key={child.id} value={child.id}>
+                  {child.name}
+                </option>
+              ))}
+            </optgroup>
           ))}
         </select>
       </div>
