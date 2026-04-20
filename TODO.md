@@ -10,7 +10,7 @@ Status as of 2026-04-19. Organized by grading criteria from `criteria.md` and de
   Switched auth to JWT strategy (Edge-compatible). `middleware.ts` checks `session.user.blocked` and redirects to `/blocked`. Also added the `blocked` check to `PATCH /api/photos/[id]`.  
   *Verification step 1e, 3a*
 
-- [ ] **Search filters UI** — year range + category + region/city  
+- [x] **Search filters UI** — year range + category + region/city  
   `GET /api/photos` already accepts `dateFrom`, `dateTo`, `category`, `region`, `city` but `/search` only exposes the text `q` field. Need filter controls on the search page.  
   *Criteria 3 — "zawężanie wyników"; Verification step 2e*
 
@@ -30,7 +30,7 @@ Status as of 2026-04-19. Organized by grading criteria from `criteria.md` and de
   `GET /api/photos` returns `meta.pages` / `meta.total` but both pages use a hard-coded `take: 48`. Large archives silently truncate. Add "Load more" or page links.  
   *Criteria 3 — "prezentacja wyników"*
 
-- [ ] **Category `<optgroup>` on upload form** (`web/app/creator/upload/upload-form.tsx`)  
+- [x] **Category `<optgroup>` on upload form** (`web/app/creator/upload/upload-form.tsx`)  
   All categories are listed flat. Group leaf categories under their parent using `<optgroup>` labels for clarity.  
   *Criteria 4, Criteria 5 — "intuicyjny interfejs"*
 

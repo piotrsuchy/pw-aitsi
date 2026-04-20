@@ -11,8 +11,16 @@ export default async function UploadPage() {
   if (session.user.role === "VIEWER") redirect("/");
 
   const categories = await db.category.findMany({
+    where: { parentId: null },
     orderBy: { name: "asc" },
-    select: { id: true, name: true },
+    select: {
+      id: true,
+      name: true,
+      children: {
+        orderBy: { name: "asc" },
+        select: { id: true, name: true },
+      },
+    },
   });
 
   return (

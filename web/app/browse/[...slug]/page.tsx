@@ -28,8 +28,12 @@ export default async function BrowseCategoryPage({
     include: {
       parent: { select: { name: true, slug: true } },
       children: {
-        select: { id: true, name: true, slug: true },
-        include: { _count: { select: { photos: true } } },
+        select: { 
+          id: true, 
+          name: true, 
+          slug: true,
+          _count: { select: { photos: true } }
+        },
       },
     },
   });
@@ -94,15 +98,24 @@ export default async function BrowseCategoryPage({
           <ul className="flex flex-wrap gap-2" role="list">
             {category.children.map((child) => (
               <li key={child.id}>
-                <Link
-                  href={`/browse/${child.slug}`}
-                  className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border)] px-4 py-1.5 text-sm hover:border-[var(--primary)] hover:text-[var(--primary)] transition-colors"
-                >
-                  {child.name}
-                  <span className="text-xs text-[var(--muted-foreground)]">
-                    ({child._count.photos})
+                {child._count.photos > 0 ? (
+                  <Link
+                    href={`/browse/${child.slug}`}
+                    className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border)] px-4 py-1.5 text-sm hover:border-[var(--primary)] hover:text-[var(--primary)] transition-colors"
+                  >
+                    {child.name}
+                    <span className="text-xs text-[var(--muted-foreground)]">
+                      ({child._count.photos})
+                    </span>
+                  </Link>
+                ) : (
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border)] px-4 py-1.5 text-sm text-[var(--muted-foreground)] opacity-60 cursor-not-allowed">
+                    {child.name}
+                    <span className="text-xs">
+                      (0)
+                    </span>
                   </span>
-                </Link>
+                )}
               </li>
             ))}
           </ul>

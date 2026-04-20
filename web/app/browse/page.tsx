@@ -42,15 +42,24 @@ export default async function BrowsePage() {
           <ul className="flex flex-wrap gap-2" role="list">
             {categories.map((cat) => (
               <li key={cat.id}>
-                <Link
-                  href={`/browse/${cat.slug}`}
-                  className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border)] px-4 py-1.5 text-sm hover:border-[var(--primary)] hover:text-[var(--primary)] transition-colors"
-                >
-                  {cat.name}
-                  <span className="text-xs text-[var(--muted-foreground)]">
-                    ({cat._count.photos})
+                {cat._count.photos > 0 ? (
+                  <Link
+                    href={`/browse/${cat.slug}`}
+                    className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border)] px-4 py-1.5 text-sm hover:border-[var(--primary)] hover:text-[var(--primary)] transition-colors"
+                  >
+                    {cat.name}
+                    <span className="text-xs text-[var(--muted-foreground)]">
+                      ({cat._count.photos})
+                    </span>
+                  </Link>
+                ) : (
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border)] px-4 py-1.5 text-sm text-[var(--muted-foreground)] opacity-60 cursor-not-allowed">
+                    {cat.name}
+                    <span className="text-xs">
+                      (0)
+                    </span>
                   </span>
-                </Link>
+                )}
               </li>
             ))}
           </ul>
