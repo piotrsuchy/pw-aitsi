@@ -8,7 +8,14 @@ async function getCategories() {
   return db.category.findMany({
     where: { parentId: null },
     include: {
-      children: { select: { id: true, name: true, slug: true } },
+      children: {
+        select: {
+          id: true,
+          name: true,
+          slug: true,
+          _count: { select: { photos: true } },
+        },
+      },
       _count: { select: { photos: true } },
     },
     orderBy: { name: "asc" },
@@ -40,16 +47,18 @@ export default async function BrowsePage() {
             Regions
           </h2>
           <ul className="flex flex-wrap gap-2" role="list">
-            {categories.map((cat) => (
+            {categories.map((cat) => {
+              const totalPhotos = cat._count.photos + cat.children.reduce((acc, child) => acc + (child._count?.photos || 0), 0);
+              return (
               <li key={cat.id}>
-                {cat._count.photos > 0 ? (
+                {totalPhotos > 0 ? (
                   <Link
                     href={`/browse/${cat.slug}`}
                     className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border)] px-4 py-1.5 text-sm hover:border-[var(--primary)] hover:text-[var(--primary)] transition-colors"
                   >
                     {cat.name}
                     <span className="text-xs text-[var(--muted-foreground)]">
-                      ({cat._count.photos})
+                      ({totalPhotos})
                     </span>
                   </Link>
                 ) : (
@@ -61,7 +70,7 @@ export default async function BrowsePage() {
                   </span>
                 )}
               </li>
-            ))}
+            )})}
           </ul>
         </section>
       )}

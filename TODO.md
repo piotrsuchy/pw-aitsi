@@ -6,8 +6,6 @@ Status as of 2026-04-19. Organized by grading criteria from `criteria.md` and de
 
 ## High Priority (graded features with gaps)
 
-- [ ] **Give an option to add categories - currently it's just Krakow and Warsaw**
-
 - [ ] **Pagination UI on Browse and Search pages**  
   `GET /api/photos` returns `meta.pages` / `meta.total` but both pages use a hard-coded `take: 48`. Large archives silently truncate. Add "Load more" or page links.  
   *Criteria 3 — "prezentacja wyników"*
@@ -75,3 +73,6 @@ Status as of 2026-04-19. Organized by grading criteria from `criteria.md` and de
 - [x] **Tag editing in photo edit panel** (`web/app/photos/[id]/photo-actions.tsx`)
   Upload form supports tags; inline edit does not. The `PATCH /api/photos/[id]` endpoint needs to be extended to handle tags, and the edit form needs a tags field.
   *Criteria 4 — "edycja i usuwanie swoich materiałów"*
+- [x] **Give an option to add categories - currently it's just Krakow and Warsaw**
+- [x] **Restrict category creation and deletion to Admin only**
+  Created a deletion endpoint enforcing business constraints (zero child/photo counts) and moved taxonomy UI entirely to the /admin Dashboard scope, hiding these capabilities from standard CREATOR access.

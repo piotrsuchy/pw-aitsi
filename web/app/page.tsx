@@ -23,7 +23,14 @@ async function getRootCategories() {
     return await db.category.findMany({
       where: { parentId: null },
       include: {
-        children: { select: { id: true, name: true, slug: true } },
+        children: {
+          select: {
+            id: true,
+            name: true,
+            slug: true,
+            _count: { select: { photos: true } },
+          },
+        },
         _count: { select: { photos: true } },
       },
       orderBy: { name: "asc" },
@@ -91,8 +98,10 @@ export default async function HomePage() {
                   >
                     <span className="font-semibold">{cat.name}</span>
                     <span className="mt-1 block text-xs text-[var(--muted-foreground)]">
-                      {cat._count.photos}{" "}
-                      {cat._count.photos === 1 ? "photo" : "photos"}
+                      {(() => {
+                        const total = cat._count.photos + cat.children.reduce((acc, child) => acc + (child._count?.photos || 0), 0);
+                        return `${total} ${total === 1 ? "photo" : "photos"}`;
+                      })()}
                     </span>
                     {cat.children.length > 0 && (
                       <ul className="mt-2 space-y-0.5" aria-label={`Districts – ${cat.name}`}>

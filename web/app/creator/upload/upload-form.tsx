@@ -25,7 +25,6 @@ export function UploadForm({ categories }: { categories: Category[] }) {
     takenAtYear: "",
     takenAtMonth: "",
     takenAtDay: "",
-    datePrecision: "",
     region: "",
     city: "",
     district: "",
@@ -51,6 +50,8 @@ export function UploadForm({ categories }: { categories: Category[] }) {
     const file = fileRef.current?.files?.[0];
     if (!file) { setError("Please select an image file."); return; }
     if (!form.title.trim()) { setError("Title is required."); return; }
+    if (form.takenAtMonth && !form.takenAtYear) { setError("Year is required if month is provided."); return; }
+    if (form.takenAtDay && !form.takenAtMonth) { setError("Month is required if day is provided."); return; }
 
     setUploading(true);
 
@@ -83,7 +84,10 @@ export function UploadForm({ categories }: { categories: Category[] }) {
       takenAtYear: form.takenAtYear ? parseInt(form.takenAtYear) : null,
       takenAtMonth: form.takenAtMonth ? parseInt(form.takenAtMonth) : null,
       takenAtDay: form.takenAtDay ? parseInt(form.takenAtDay) : null,
-      datePrecision: form.datePrecision || null,
+      datePrecision: 
+        (form.takenAtDay && form.takenAtMonth && form.takenAtYear) ? "DAY" 
+        : (form.takenAtMonth && form.takenAtYear) ? "MONTH" 
+        : form.takenAtYear ? "YEAR" : null,
       location: hasLocation
         ? {
             region: form.region || null,
@@ -248,20 +252,6 @@ export function UploadForm({ categories }: { categories: Category[] }) {
               className="w-full rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-sm focus-visible:outline-[var(--primary)]"
             />
           </div>
-        </div>
-        <div>
-          <label htmlFor="precision" className="block text-xs text-[var(--muted-foreground)] mb-1">Date precision</label>
-          <select
-            id="precision"
-            value={form.datePrecision}
-            onChange={(e) => set("datePrecision", e.target.value)}
-            className="w-full rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-sm focus-visible:outline-[var(--primary)]"
-          >
-            <option value="">— Select precision —</option>
-            <option value="YEAR">Year only</option>
-            <option value="MONTH">Year + Month</option>
-            <option value="DAY">Full date</option>
-          </select>
         </div>
       </fieldset>
 

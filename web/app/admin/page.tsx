@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { UserTable } from "./user-table";
+import { CategoryTable } from "./category-table";
 
 export const metadata = { title: "Admin – Local Archive" };
 
@@ -23,6 +24,13 @@ export default async function AdminPage() {
     db.user.findMany({
       orderBy: { createdAt: "asc" },
       select: { id: true, name: true, email: true, role: true, blocked: true },
+    }),
+    db.category.findMany({
+      orderBy: { name: "asc" },
+      include: {
+        parent: { select: { name: true } },
+        _count: { select: { photos: true, children: true } },
+      },
     }),
   ]);
 
@@ -89,7 +97,6 @@ export default async function AdminPage() {
         )}
       </section>
 
-      {/* User management */}
       <section aria-labelledby="users-heading">
         <h2 id="users-heading" className="text-xl font-semibold mb-4">
           User management
@@ -98,6 +105,27 @@ export default async function AdminPage() {
           Change a user&apos;s role or block their access. Click <strong>Save</strong> per row to apply.
         </p>
         <UserTable initialUsers={users} />
+      </section>
+
+      {/* Category management */}
+      <section aria-labelledby="categories-heading">
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <h2 id="categories-heading" className="text-xl font-semibold">
+              Category management
+            </h2>
+            <p className="text-sm text-[var(--muted-foreground)] mt-1">
+              Add new regions or districts, or delete empty categories. Only categories containing 0 photos and 0 subcategories can be deleted.
+            </p>
+          </div>
+          <Link
+            href="/admin/categories/new"
+            className="rounded-lg bg-[var(--primary)] px-4 py-2 text-sm font-semibold text-[var(--primary-foreground)] hover:opacity-90 transition-opacity whitespace-nowrap ml-4"
+          >
+            Add category
+          </Link>
+        </div>
+        <CategoryTable initialCategories={categories} />
       </section>
     </div>
   );

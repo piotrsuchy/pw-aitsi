@@ -56,6 +56,7 @@ export async function Navbar() {
                   My photos
                 </Link>
               </li>
+
               <li>
                 <Link
                   href="/creator/upload"
