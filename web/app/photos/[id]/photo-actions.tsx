@@ -33,6 +33,7 @@ export function PhotoActions({ photoId, initial, categories }: PhotoActionsProps
   const [deleting, setDeleting] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
 
   const [form, setForm] = useState({
     title: initial.title,
@@ -67,6 +68,7 @@ export function PhotoActions({ photoId, initial, categories }: PhotoActionsProps
 
     setSaving(true);
     setError(null);
+    setSuccess(null);
 
     const body: Record<string, unknown> = {
       title: form.title,
@@ -101,6 +103,7 @@ export function PhotoActions({ photoId, initial, categories }: PhotoActionsProps
     setSaving(false);
     if (res.ok) {
       setIsEditing(false);
+      setSuccess("Changes saved successfully.");
       router.refresh();
     } else {
       const data = await res.json().catch(() => ({}));
@@ -129,10 +132,17 @@ export function PhotoActions({ photoId, initial, categories }: PhotoActionsProps
       {error && (
         <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
       )}
+      {success && (
+        <p className="text-sm font-medium text-green-600 dark:text-green-400">{success}</p>
+      )}
 
       <div className="flex gap-2">
         <button
-          onClick={() => setIsEditing((v) => !v)}
+          onClick={() => {
+            setIsEditing((v) => !v);
+            setSuccess(null);
+            setError(null);
+          }}
           className="rounded-lg border border-[var(--border)] px-4 py-2 text-sm font-medium hover:bg-[var(--muted)] transition-colors"
         >
           {isEditing ? "Cancel" : "Edit"}

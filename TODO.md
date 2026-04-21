@@ -4,14 +4,6 @@ Status as of 2026-04-21. Organized by grading criteria from `criteria.md` and de
 
 ---
 
-## High Priority (graded features with gaps)
-
-- [ ] **Success feedback after inline photo edit**  
-  `PhotoActions` shows an error state but no success toast/message after a successful save. Add a brief confirmation.  
-  *Criteria 5 — "obsługa błędów"*
-
----
-
 ## Medium Priority (quality / robustness)
 
 - [ ] **Configure `next.config.ts` image remote patterns**  
@@ -75,3 +67,6 @@ Status as of 2026-04-21. Organized by grading criteria from `criteria.md` and de
 - [x] **Pagination UI on Browse and Search pages**
   `GET /api/photos` returns `meta.pages` / `meta.total` but both pages use a hard-coded `take: 48`. Large archives silently truncate. Add "Load more" or page links.
   *Criteria 3 — "prezentacja wyników"*
+- [x] **Success feedback after inline photo edit**  
+  `PhotoActions` shows an error state but no success toast/message after a successful save. Add a brief confirmation.  
+  *Criteria 5 — "obsługa błędów"*
