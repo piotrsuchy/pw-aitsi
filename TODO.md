@@ -4,10 +4,6 @@ Status as of 2026-04-21. Organized by grading criteria from `criteria.md` and de
 
 ---
 
-## Documentation (required for grading)
-
-- [ ] **API documentation** — list of all public and private endpoints with example `curl` calls. *Criteria 8, Verification step 6*
-
 ---
 
 ## Already Complete (for reference)
@@ -62,3 +58,5 @@ Status as of 2026-04-21. Organized by grading criteria from `criteria.md` and de
 - [x] **WAVE accessibility audit**
   Run the WAVE browser extension on the homepage and fix any reported errors (contrast, missing alt text, etc.) before the demo.
   *Verification step 4a*
+- [x] **API documentation** — list of all public and private endpoints with example `curl` calls.
+  *Criteria 8, Verification step 6*
