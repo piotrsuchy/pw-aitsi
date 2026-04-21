@@ -94,10 +94,10 @@ export default async function HomePage() {
                 <li key={cat.id}>
                   <Link
                     href={`/browse/${cat.slug}`}
-                    className="group block rounded-xl border border-[var(--border)] bg-[var(--muted)] p-4 hover:border-[var(--primary)] hover:bg-[var(--background)] transition-colors focus-visible:outline-[var(--primary)]"
+                    className="group block rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-900 p-4 hover:border-blue-700 dark:hover:border-blue-400 hover:bg-white dark:hover:bg-zinc-950 transition-colors focus-visible:outline-blue-700 dark:focus-visible:outline-blue-400"
                   >
-                    <span className="font-semibold">{cat.name}</span>
-                    <span className="mt-1 block text-xs text-[var(--muted-foreground)]">
+                    <span className="font-semibold text-zinc-900 dark:text-zinc-50">{cat.name}</span>
+                    <span className="mt-1 block text-xs text-zinc-600 dark:text-zinc-400">
                       {(() => {
                         const total = cat._count.photos + cat.children.reduce((acc, child) => acc + (child._count?.photos || 0), 0);
                         return `${total} ${total === 1 ? "photo" : "photos"}`;
@@ -106,12 +106,12 @@ export default async function HomePage() {
                     {cat.children.length > 0 && (
                       <ul className="max-h-0 opacity-0 overflow-hidden group-hover:max-h-40 group-hover:opacity-100 group-hover:mt-2 transition-all duration-300 ease-in-out space-y-0.5" aria-label={`Districts – ${cat.name}`}>
                         {cat.children.slice(0, 3).map((child) => (
-                          <li key={child.id} className="text-xs text-[var(--muted-foreground)]">
+                          <li key={child.id} className="text-xs text-zinc-600 dark:text-zinc-400">
                             {child.name}
                           </li>
                         ))}
                         {cat.children.length > 3 && (
-                          <li className="text-xs text-[var(--muted-foreground)]">
+                          <li className="text-xs text-zinc-600 dark:text-zinc-400">
                             +{cat.children.length - 3} more
                           </li>
                         )}
@@ -151,9 +151,9 @@ export default async function HomePage() {
                 <li key={photo.id}>
                   <Link
                     href={`/photos/${photo.id}`}
-                    className="group block bg-[var(--background)] rounded-xl overflow-hidden border border-[var(--border)] hover:border-[var(--primary)] transition-colors focus-visible:outline-[var(--primary)]"
+                    className="group block bg-white dark:bg-zinc-950 rounded-xl overflow-hidden border border-zinc-200 dark:border-zinc-800 hover:border-blue-700 dark:hover:border-blue-400 transition-colors focus-visible:outline-blue-700 dark:focus-visible:outline-blue-400"
                   >
-                    <div className="relative aspect-[4/3] bg-[var(--muted)]">
+                    <div className="relative aspect-[4/3] bg-zinc-100 dark:bg-zinc-900">
                       <Image
                         src={photo.url}
                         alt=""
@@ -163,9 +163,9 @@ export default async function HomePage() {
                       />
                     </div>
                     <div className="p-3">
-                      <p className="font-medium text-sm truncate text-[var(--foreground)]">{photo.title}</p>
+                      <p className="font-medium text-sm truncate text-zinc-900 dark:text-zinc-50">{photo.title}</p>
                       {photo.location?.city && (
-                        <p className="text-xs text-[var(--muted-foreground)] truncate">
+                        <p className="text-xs text-zinc-600 dark:text-zinc-400 truncate">
                           {photo.location.city}
                           {photo.takenAtYear ? `, ${photo.takenAtYear}` : ""}
                         </p>

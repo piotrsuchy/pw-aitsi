@@ -62,6 +62,12 @@ Backend projektu "Local Archive" udostępnia architekturę REST API (`/api/*`), 
 
 Pełna dokumentacja API, zawierająca precyzyjne przykłady wywołań poprzez polecenia `curl`, została umieszczona w osobnej dokumentacji technicznej (`docs/api.md`).
 
+## Testy Automatyczne
+
+Aplikacja została pokryta testami jednostkowymi oraz integracyjnymi z wykorzystaniem środowiska **Vitest**. Testy te weryfikują m.in. poprawność działania kluczowych ścieżek API, takich jak budowanie hierarchii kategorii.
+
+![Wyniki testów Vitest](docs/images/vitest-results.png)
+
 ## Dostępność
 
 System udokumentowano pod kątem bezwzględnej zgodności ze standardami WCAG 2.1 na poziomie AA. Walidację ciągłą zapewnia biblioteka `@axe-core/cli`, a dopełnia audyt manualny z wtyczką WAVE.
@@ -69,3 +75,5 @@ System udokumentowano pod kątem bezwzględnej zgodności ze standardami WCAG 2.
 - **Klawiatura i czytniki**: Wdrożono ukryte odnośniki dla omijania bloków (`skip-link`), semantyczne punkty orientacyjne w kodzie HTML i jasne etykiety ARIA.
 - **Orientacja wizualna**: Wszystkie interaktywne elementy po użyciu klawiatury wskazują swoją aktywność grubymi pierścieniami fokusu (`focus-visible`). Obrazy czysto dekoracyjne oznaczane są jako `alt=""`.
 - **Wizja**: Dostarczono trzy palety kolorystyczne (w tym tryb o bardzo wysokim kontraście), oparte na obliczeniach z użyciem systemu tokenów Tailwind by z łatwością spełniać rygory czytelności minimalnej tekstów.
+
+![Wyniki walidacji Axe-core](docs/images/a11y-test-results.png)

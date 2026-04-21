@@ -49,7 +49,7 @@ export function ThemeSwitcher() {
       onClick={cycle}
       aria-label={`Theme: ${labels[theme]}. Click to change.`}
       title={`Theme: ${labels[theme]}`}
-      className="flex items-center gap-1.5 rounded-md border border-[var(--border)] px-3 py-1.5 text-sm font-medium hover:bg-[var(--muted)] transition-colors focus-visible:outline-[var(--primary)]"
+      className="flex items-center gap-1.5 rounded-md border border-zinc-200 dark:border-zinc-800 px-3 py-1.5 text-sm font-medium hover:bg-zinc-100 dark:hover:bg-zinc-900 text-zinc-900 dark:text-zinc-50 transition-colors focus-visible:outline-blue-700 dark:focus-visible:outline-blue-400"
     >
       <span aria-hidden="true">{icons[theme]}</span>
       <span className="hidden sm:inline">{labels[theme]}</span>
