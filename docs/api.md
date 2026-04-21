@@ -152,7 +152,7 @@ curl -X PATCH "http://localhost:3000/api/users/user-123/block" \
 ## Examples of usage
 
 ```bash
-❯ curl -X GET "http://localhost:3000/api/photos/cmo8zr629000rsestw163ng58" | jq .
+$ curl -X GET "http://localhost:3000/api/photos/cmo8zr629000rsestw163ng58" | jq .
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
 100   718    0   718    0     0  14272      0 --:--:-- --:--:-- --:--:-- 14360
@@ -194,7 +194,7 @@ curl -X PATCH "http://localhost:3000/api/users/user-123/block" \
 ```
 
 ```bash
-❯ curl -X GET "http://localhost:3000/api/categories" | jq .
+$ curl -X GET "http://localhost:3000/api/categories" | jq .
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
 100   697    0   697    0     0  12382      0 --:--:-- --:--:-- --:--:-- 12446
