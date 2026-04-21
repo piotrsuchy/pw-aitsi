@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { db } from "@/lib/db";
 import type { Prisma } from "@/app/generated/prisma/client";
+import { Pagination } from "@/components/pagination";
 
 export async function generateMetadata({
   searchParams,
@@ -29,9 +30,10 @@ export default async function SearchPage({
     dateTo?: string;
     region?: string;
     city?: string;
+    page?: string;
   }>;
 }) {
-  const { q, category, dateFrom, dateTo, region, city } = await searchParams;
+  const { q, category, dateFrom, dateTo, region, city, page: pageStr } = await searchParams;
   const query = q?.trim() ?? "";
 
   const parsedDateFrom = dateFrom ? parseInt(dateFrom) : undefined;
@@ -60,16 +62,22 @@ export default async function SearchPage({
       : {}),
   };
 
-  const [photos, categories] = await Promise.all([
+  const page = pageStr ? parseInt(pageStr) : 1;
+  const take = 12;
+  const skip = (page - 1) * take;
+
+  const [photos, totalPhotos, categories] = await Promise.all([
     db.photo.findMany({
       where,
       orderBy: { createdAt: "desc" },
-      take: 48,
+      take,
+      skip,
       include: {
         location: true,
         category: { select: { name: true, slug: true } },
       },
     }),
+    db.photo.count({ where }),
     db.category.findMany({
       where: { parentId: null },
       orderBy: { name: "asc" },
@@ -81,6 +89,8 @@ export default async function SearchPage({
       },
     }),
   ]);
+
+  const totalPages = Math.ceil(totalPhotos / take);
 
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 py-10 space-y-8">
@@ -252,6 +262,10 @@ export default async function SearchPage({
             </li>
           ))}
         </ul>
+      )}
+
+      {totalPages > 1 && (
+        <Pagination totalPages={totalPages} currentPage={page} />
       )}
     </div>
   );

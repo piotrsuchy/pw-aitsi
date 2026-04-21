@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { db } from "@/lib/db";
+import { Pagination } from "@/components/pagination";
 
 export const metadata = { title: "Browse – Local Archive" };
 
@@ -22,10 +23,11 @@ async function getCategories() {
   });
 }
 
-async function getPhotos() {
+async function getPhotos(take: number, skip: number) {
   return db.photo.findMany({
     orderBy: { createdAt: "desc" },
-    take: 48,
+    take,
+    skip,
     include: {
       location: true,
       category: { select: { name: true, slug: true } },
@@ -33,8 +35,19 @@ async function getPhotos() {
   });
 }
 
-export default async function BrowsePage() {
-  const [categories, photos] = await Promise.all([getCategories(), getPhotos()]);
+export default async function BrowsePage({ searchParams }: { searchParams: Promise<{ page?: string }> }) {
+  const pageStr = (await searchParams).page;
+  const page = pageStr ? parseInt(pageStr) : 1;
+  const take = 12;
+  const skip = (page - 1) * take;
+
+  const [categories, photos, totalPhotos] = await Promise.all([
+    getCategories(), 
+    getPhotos(take, skip),
+    db.photo.count()
+  ]);
+
+  const totalPages = Math.ceil(totalPhotos / take);
 
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 py-10 space-y-10">
@@ -125,6 +138,10 @@ export default async function BrowsePage() {
           </ul>
         )}
       </section>
+
+      {totalPages > 1 && (
+        <Pagination totalPages={totalPages} currentPage={page} />
+      )}
     </div>
   );
 }

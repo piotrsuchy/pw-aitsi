@@ -21,7 +21,7 @@ Both commands must be run from the `web/` directory.
 ## What is tested
 
 | File | Route(s) covered |
-|---|---|
+| --- | --- |
 | `tests/api/photos.test.ts` | `GET /api/photos`, `POST /api/photos` |
 | `tests/api/photos-id.test.ts` | `GET /api/photos/[id]`, `PATCH /api/photos/[id]`, `DELETE /api/photos/[id]` |
 | `tests/api/users.test.ts` | `PATCH /api/users/[id]/role`, `PATCH /api/users/[id]/block` |
