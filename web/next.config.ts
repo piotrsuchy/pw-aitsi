@@ -6,6 +6,14 @@ const nextConfig: NextConfig = {
     localPatterns: [
       { pathname: "/uploads/**" },
     ],
+    // Allow external images from Google (user profile pictures).
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com",
+        pathname: "/**",
+      },
+    ],
   },
 };
 

@@ -4,20 +4,6 @@ Status as of 2026-04-21. Organized by grading criteria from `criteria.md` and de
 
 ---
 
-## Medium Priority (quality / robustness)
-
-- [ ] **Configure `next.config.ts` image remote patterns**  
-  Currently empty. If user avatars (Google profile images) or any external image URLs are ever displayed via `<Image>`, they will be blocked.
-
-- [ ] **`/api/admin/recent` — document or remove**  
-  This endpoint duplicates the admin page SSR query and is never called by the frontend. Either document it as a demo-curl target (Verification step 6) or remove it.
-
-- [ ] **WAVE accessibility audit**  
-  Run the WAVE browser extension on the homepage and fix any reported errors (contrast, missing alt text, etc.) before the demo.  
-  *Verification step 4a*
-
----
-
 ## Documentation (required for grading)
 
 - [ ] **Information architecture diagram** — site map or tree diagram showing the category hierarchy and page structure. *Criteria 1*
@@ -55,8 +41,8 @@ Status as of 2026-04-21. Organized by grading criteria from `criteria.md` and de
 - [x] **Seed admin email must match real Google account**
   Seed updated to `piotrsuchypp@gmail.com`. Dev credentials provider added (`admin@dev.local`, `creator@dev.local`, `viewer@dev.local`) with "Dev Login" buttons on the login page (development only). `npm run dev:set-role -- <email> <ROLE>` script added for ad-hoc role changes.
   *Verification step 1c*
-- [x] **Category `<optgroup>` on upload form** (`web/app/creator/upload/upload-form.tsx`)  
-  All categories are listed flat. Group leaf categories under their parent using `<optgroup>` labels for clarity.  
+- [x] **Category `<optgroup>` on upload form** (`web/app/creator/upload/upload-form.tsx`)
+  All categories are listed flat. Group leaf categories under their parent using `<optgroup>` labels for clarity.
   *Criteria 4, Criteria 5 — "intuicyjny interfejs"*
 - [x] **Tag editing in photo edit panel** (`web/app/photos/[id]/photo-actions.tsx`)
   Upload form supports tags; inline edit does not. The `PATCH /api/photos/[id]` endpoint needs to be extended to handle tags, and the edit form needs a tags field.
@@ -67,6 +53,13 @@ Status as of 2026-04-21. Organized by grading criteria from `criteria.md` and de
 - [x] **Pagination UI on Browse and Search pages**
   `GET /api/photos` returns `meta.pages` / `meta.total` but both pages use a hard-coded `take: 48`. Large archives silently truncate. Add "Load more" or page links.
   *Criteria 3 — "prezentacja wyników"*
-- [x] **Success feedback after inline photo edit**  
-  `PhotoActions` shows an error state but no success toast/message after a successful save. Add a brief confirmation.  
+- [x] **Success feedback after inline photo edit**
+  `PhotoActions` shows an error state but no success toast/message after a successful save. Add a brief confirmation.
   *Criteria 5 — "obsługa błędów"*
+- [x] **Configure `next.config.ts` image remote patterns**
+  Currently empty. If user avatars (Google profile images) or any external image URLs are ever displayed via `<Image>`, they will be blocked.
+- [x] **`/api/admin/recent` — document or remove**
+  This endpoint duplicates the admin page SSR query and is never called by the frontend. Either document it as a demo-curl target (Verification step 6) or remove it.
+- [x] **WAVE accessibility audit**
+  Run the WAVE browser extension on the homepage and fix any reported errors (contrast, missing alt text, etc.) before the demo.
+  *Verification step 4a*
