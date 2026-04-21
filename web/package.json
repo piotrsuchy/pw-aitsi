@@ -12,7 +12,8 @@
     "db:seed": "tsx prisma/seed.ts",
     "db:migrate": "prisma migrate dev",
     "db:reset": "prisma migrate reset",
-    "dev:set-role": "tsx scripts/set-role.ts"
+    "dev:set-role": "tsx scripts/set-role.ts",
+    "test:a11y": "axe http://localhost:3000"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
