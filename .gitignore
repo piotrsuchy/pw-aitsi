@@ -13,3 +13,5 @@
 # Secrets
 *.pem
 *.key
+
+docs/images/*
