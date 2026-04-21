@@ -151,19 +151,19 @@ export default async function HomePage() {
                 <li key={photo.id}>
                   <Link
                     href={`/photos/${photo.id}`}
-                    className="group block rounded-xl overflow-hidden border border-[var(--border)] hover:border-[var(--primary)] transition-colors focus-visible:outline-[var(--primary)]"
+                    className="group block bg-[var(--background)] rounded-xl overflow-hidden border border-[var(--border)] hover:border-[var(--primary)] transition-colors focus-visible:outline-[var(--primary)]"
                   >
                     <div className="relative aspect-[4/3] bg-[var(--muted)]">
                       <Image
                         src={photo.url}
-                        alt={photo.title}
+                        alt=""
                         fill
                         className="object-cover group-hover:scale-105 transition-transform duration-300"
                         sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
                       />
                     </div>
                     <div className="p-3">
-                      <p className="font-medium text-sm truncate">{photo.title}</p>
+                      <p className="font-medium text-sm truncate text-[var(--foreground)]">{photo.title}</p>
                       {photo.location?.city && (
                         <p className="text-xs text-[var(--muted-foreground)] truncate">
                           {photo.location.city}
