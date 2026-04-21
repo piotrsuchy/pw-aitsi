@@ -4,8 +4,6 @@ Status as of 2026-04-21. Organized by grading criteria from `criteria.md` and de
 
 ---
 
----
-
 ## Already Complete (for reference)
 
 - [x] **Architecture overview** — describe the Next.js App Router + Prisma + PostgreSQL + NextAuth stack and justify design decisions. *Criteria 8*
