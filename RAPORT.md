@@ -1,5 +1,15 @@
 # Raport Końcowy: Local Archive
 
+Autor: Piotr Suchy, numer albumu: 310310
+
+## Repozytoria i szczegółowa dokumentacja
+
+Repozytorium hostowane na github: [pw-aitsi](https://github.com/piotrsuchy/pw-aitsi/)
+
+Repozytorium hostowane na gitlab: [pw-aitsi](https://gitlab.com/piotrsuchy/pw-aitsi)
+
+Szczegółowa dokumentacja dostępna w repozytorium w folderze docs. Ten plik to raport podsumowujący.
+
 ## Opis projektu - tematyka
 
 Aplikacja "Local Archive" to platforma cyfrowego archiwum społecznościowego. Jej głównym celem jest umożliwienie lokalnym mieszkańcom i pasjonatom historii gromadzenia, udostępniania oraz przeszukiwania starych fotografii dokumentujących ewolucję przestrzenną i historyczną danych regionów. System rozwiązuje problem rozproszonych i często niedostępnych materiałów archiwalnych, zapewniając cyfrowe, responsywne i intuicyjne miejsce do ich strukturyzacji, uwzględniając wymiar zarówno geograficzny jak i czasowy.
