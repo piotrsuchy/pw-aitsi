@@ -1,18 +1,6 @@
 # TODO — pw-aitsi (Community Photo Archive)
 
-Status as of 2026-04-19. Organized by grading criteria from `criteria.md` and demo steps from `project-verification.md`.
-
----
-
-## High Priority (graded features with gaps)
-
-- [ ] **Pagination UI on Browse and Search pages**  
-  `GET /api/photos` returns `meta.pages` / `meta.total` but both pages use a hard-coded `take: 48`. Large archives silently truncate. Add "Load more" or page links.  
-  *Criteria 3 — "prezentacja wyników"*
-
-- [ ] **Success feedback after inline photo edit**  
-  `PhotoActions` shows an error state but no success toast/message after a successful save. Add a brief confirmation.  
-  *Criteria 5 — "obsługa błędów"*
+Status as of 2026-04-21. Organized by grading criteria from `criteria.md` and demo steps from `project-verification.md`.
 
 ---
 
@@ -76,3 +64,9 @@ Status as of 2026-04-19. Organized by grading criteria from `criteria.md` and de
 - [x] **Give an option to add categories - currently it's just Krakow and Warsaw**
 - [x] **Restrict category creation and deletion to Admin only**
   Created a deletion endpoint enforcing business constraints (zero child/photo counts) and moved taxonomy UI entirely to the /admin Dashboard scope, hiding these capabilities from standard CREATOR access.
+- [x] **Pagination UI on Browse and Search pages**
+  `GET /api/photos` returns `meta.pages` / `meta.total` but both pages use a hard-coded `take: 48`. Large archives silently truncate. Add "Load more" or page links.
+  *Criteria 3 — "prezentacja wyników"*
+- [x] **Success feedback after inline photo edit**  
+  `PhotoActions` shows an error state but no success toast/message after a successful save. Add a brief confirmation.  
+  *Criteria 5 — "obsługa błędów"*

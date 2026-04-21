@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { db } from "@/lib/db";
+import { Pagination } from "@/components/pagination";
 
 export async function generateMetadata({
   params,
@@ -17,10 +18,13 @@ export async function generateMetadata({
 
 export default async function BrowseCategoryPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ slug: string[] }>;
+  searchParams: Promise<{ page?: string }>;
 }) {
   const { slug } = await params;
+  const { page: pageStr } = await searchParams;
   const currentSlug = slug[slug.length - 1];
 
   const category = await db.category.findUnique({
@@ -42,15 +46,27 @@ export default async function BrowseCategoryPage({
 
   // Include photos from this category and all direct children
   const childIds = category.children.map((c) => c.id);
-  const photos = await db.photo.findMany({
-    where: { categoryId: { in: [category.id, ...childIds] } },
-    orderBy: { createdAt: "desc" },
-    take: 48,
-    include: {
-      location: true,
-      category: { select: { name: true, slug: true } },
-    },
-  });
+  const where = { categoryId: { in: [category.id, ...childIds] } };
+
+  const page = pageStr ? parseInt(pageStr) : 1;
+  const take = 12;
+  const skip = (page - 1) * take;
+
+  const [photos, totalPhotos] = await Promise.all([
+    db.photo.findMany({
+      where,
+      orderBy: { createdAt: "desc" },
+      take,
+      skip,
+      include: {
+        location: true,
+        category: { select: { name: true, slug: true } },
+      },
+    }),
+    db.photo.count({ where }),
+  ]);
+
+  const totalPages = Math.ceil(totalPhotos / take);
 
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 py-10 space-y-8">
@@ -159,6 +175,10 @@ export default async function BrowseCategoryPage({
             </li>
           ))}
         </ul>
+      )}
+
+      {totalPages > 1 && (
+        <Pagination totalPages={totalPages} currentPage={page} />
       )}
     </div>
   );

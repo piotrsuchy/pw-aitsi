@@ -12,7 +12,7 @@ export default async function AdminPage() {
   const session = await auth();
   if (!session || session.user.role !== "ADMIN") redirect("/");
 
-  const [recentPhotos, users] = await Promise.all([
+  const [recentPhotos, users, categories] = await Promise.all([
     db.photo.findMany({
       orderBy: { createdAt: "desc" },
       take: 20,

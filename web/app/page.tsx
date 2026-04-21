@@ -94,7 +94,7 @@ export default async function HomePage() {
                 <li key={cat.id}>
                   <Link
                     href={`/browse/${cat.slug}`}
-                    className="block rounded-xl border border-[var(--border)] bg-[var(--muted)] p-4 hover:border-[var(--primary)] hover:bg-[var(--background)] transition-colors focus-visible:outline-[var(--primary)]"
+                    className="group block rounded-xl border border-[var(--border)] bg-[var(--muted)] p-4 hover:border-[var(--primary)] hover:bg-[var(--background)] transition-colors focus-visible:outline-[var(--primary)]"
                   >
                     <span className="font-semibold">{cat.name}</span>
                     <span className="mt-1 block text-xs text-[var(--muted-foreground)]">
@@ -104,7 +104,7 @@ export default async function HomePage() {
                       })()}
                     </span>
                     {cat.children.length > 0 && (
-                      <ul className="mt-2 space-y-0.5" aria-label={`Districts – ${cat.name}`}>
+                      <ul className="max-h-0 opacity-0 overflow-hidden group-hover:max-h-40 group-hover:opacity-100 group-hover:mt-2 transition-all duration-300 ease-in-out space-y-0.5" aria-label={`Districts – ${cat.name}`}>
                         {cat.children.slice(0, 3).map((child) => (
                           <li key={child.id} className="text-xs text-[var(--muted-foreground)]">
                             {child.name}
