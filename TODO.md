@@ -6,17 +6,16 @@ Status as of 2026-04-21. Organized by grading criteria from `criteria.md` and de
 
 ## Documentation (required for grading)
 
-- [ ] **Information architecture diagram** — site map or tree diagram showing the category hierarchy and page structure. *Criteria 1*
-- [ ] **Database schema diagram** — ER diagram of all models. *Criteria 7*
 - [ ] **API documentation** — list of all public and private endpoints with example `curl` calls. *Criteria 8, Verification step 6*
-- [ ] **Architecture overview** — describe the Next.js App Router + Prisma + PostgreSQL + NextAuth stack and justify design decisions. *Criteria 8*
-- [ ] **WCAG compliance summary** — list the WCAG 2.1 AA techniques used (semantic HTML, skip link, aria-label, focus ring, high-contrast theme, keyboard navigation). *Criteria 6, Verification step 4a*
-- [ ] **Business/functional requirements** (for custom project track). *Criteria 10*
 
 ---
 
 ## Already Complete (for reference)
 
+- [x] **Architecture overview** — describe the Next.js App Router + Prisma + PostgreSQL + NextAuth stack and justify design decisions. *Criteria 8*
+- [x] **WCAG compliance summary** — list the WCAG 2.1 AA techniques used (semantic HTML, skip link, aria-label, focus ring, high-contrast theme, keyboard navigation). *Criteria 6, Verification step 4a*
+- [x] **Information architecture diagram** — site map or tree diagram showing the category hierarchy and page structure. *Criteria 1*
+- [x] **Database schema diagram** — ER diagram of all models. *Criteria 7*
 - [x] Google OAuth login with role system (VIEWER / CREATOR / ADMIN)
 - [x] Admin dashboard: recent uploads table + full user management (role change, block toggle)
 - [x] Photo upload with file + full metadata (title, description, category, date, location, tags)
